@@ -5,7 +5,7 @@ import {
   setSearchQuery,
   resetPage,
   nextPage,
-  getFirstSearch,
+  setFirstSearch,
 } from './js/api-service.js';
 import { createMarkup } from './js/markup.js';
 import { Notify } from 'notiflix';
@@ -15,7 +15,7 @@ let form = document.querySelector('#search-form');
 let gallery = document.querySelector('.gallery');
 let loadMoreBtn = document.querySelector('.load-more');
 
-//loadMoreBtn.style.display = "none";
+loadMoreBtn.style.display = "none";
 
 form.addEventListener('submit', function (event) {
   event.preventDefault();
@@ -28,8 +28,8 @@ form.addEventListener('submit', function (event) {
 
   setSearchQuery(searchQuery);
   resetPage();
-  getFirstSearch(true);
-  loadMoreBtn.hidden = true;
+  setFirstSearch(true);
+  // loadMoreBtn.hidden = true;
   gallery.innerHTML = '';
 
   fetchImg().then(function (data) {
@@ -48,7 +48,6 @@ form.addEventListener('submit', function (event) {
     loadMoreBtn.style.display = 'block';
   });
 
-  event.target.searchQuery.value = '';
 });
 
 loadMoreBtn.addEventListener('click', function () {
@@ -62,7 +61,6 @@ loadMoreBtn.addEventListener('click', function () {
       loadMoreBtn.hidden = true;
       return;
     }
-
     gallery.insertAdjacentHTML('beforeend', createMarkup(data));
     new SimpleLightbox('.gallery a', {
       captionDelay: 200,

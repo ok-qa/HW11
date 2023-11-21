@@ -8,7 +8,7 @@ let firstSearch = true;
 let total = null;
 let search = '';
 
-export function getFirstSearch(state) {
+export function setFirstSearch(state) {
   firstSearch = state;
 }
 
@@ -28,13 +28,14 @@ export async function fetchImg() {
     image_type: 'photo',
     orientation: 'horizontal',
     safesearch: true,
+    page: currentPage,
     per_page: 40,
   };
   try {
     let response = await axios.get(baseURL, { params: params });
     total = response.data.total;
     if (firstSearch) {
-      getFirstSearch(false);
+      setFirstSearch(false);
     }
     let imgData = response.data.hits.map(hit => {
       return {
